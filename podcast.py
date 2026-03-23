@@ -23,3 +23,28 @@ Podcast differs from Song in two ways:
             (Joe Rogan, Comedy) The Joe Rogan Experience active = True,
              debut year: 2009, duration: 02:30:00 is explicit: True
 """
+from music_track import MusicTrack
+
+class Podcast(MusicTrack):
+    '''
+    This is going to be the concrete subclass for a podcast episode.
+    '''
+
+    def __init__(self, artist, album, duration_seconds, is_explicit=False):
+        super().__init__(artist, album, duration_seconds)
+        self._is_explicit = is_explicit
+
+    @property
+    def is_explicit(self) -> bool:
+        # This is going to check if the podcast is explicit or not.
+        return self._is_explicit
+
+    def play_time_formatted(self) -> str:
+        # This is going to format the play time for the podcast.
+        hours = int(self.duration_seconds // 3600)
+        minutes = int((self.duration_seconds % 3600) // 60)
+        seconds = int(self.duration_seconds % 60)
+        return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+    def __str__(self):
+        return f"({self.artist}) {self.album}, duration: {self.play_time_formatted()} is explicit: {self.is_explicit}"
