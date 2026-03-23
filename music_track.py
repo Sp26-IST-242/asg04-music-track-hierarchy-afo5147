@@ -20,18 +20,14 @@ Design decisions to implement:
 from abc import ABC, abstractmethod
 from artist import Artist
 from album import Album
+from functools import total_ordering
 
+@total_ordering
 class MusicTrack(ABC):
-    def __init__(self, title: str, artist: Artist, album: Album, duration_seconds: int):
-        self._title = title
+    def __init__(self, artist: Artist, album: Album, duration_seconds: float):
         self._artist = artist
         self._album = album
         self._duration_seconds = duration_seconds
-
-
-    @property
-    def title(self) -> str:
-        return self._title
       
     @property
     def artist(self) -> Artist:
@@ -63,16 +59,13 @@ class MusicTrack(ABC):
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, MusicTrack):
             return False
-        return (self.title == other.title and
-                self.artist == other.artist and
-                self.album == other.album and
-                self.duration_seconds == other.duration_seconds)
+        return self.release_year == other.release_year
 
     def __lt__(self, other: object) -> bool:
-        # This is going to determin the order of teh trask.
+        # This is going to determin the order of the tracks.
         if not isinstance(other, MusicTrack):
             return False
-        return self.title < other.title
+        return self.release_year < other.release_year
 
-    def __hash__(self):
-        return hash((self.title, self.artist, self.album, self.duration_seconds))
+    def __hash__(self) -> int:
+        return hash(self.release_year)
