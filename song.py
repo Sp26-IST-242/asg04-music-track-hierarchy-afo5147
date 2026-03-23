@@ -19,3 +19,19 @@ responsibility is to:
             (Kendrick Lamar, Hip-Hop) DAMN. active = True,  debut year: 2017,
             duration: 03:40
 """
+from music_track import MusicTrack
+
+class Song(MusicTrack):
+    '''
+    This is going to be the concrete subclass for the music track.
+    '''
+    def __init__(self, title, artist, album, duration_seconds):
+        super().__init__(title, artist, album, duration_seconds)
+
+    def play_time_formatted(self) -> str:
+        minutes = int(self.duration_seconds // 60)
+        seconds = int(self.duration_seconds % 60)
+        return f"{minutes:02}:{seconds:02}"
+
+    def __str__(self):
+        return f"({self.artist}) {self.album}, duration: {self.play_time_formatted()}"
