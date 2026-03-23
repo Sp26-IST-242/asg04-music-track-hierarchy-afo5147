@@ -23,4 +23,4 @@ class Artist:
     
     def __str__(self):
         # This is going to be the format for what is returned when printed
-        return f"{self._name} ({self._genre})"
+        return f"{self._name}, {self._genre}"
